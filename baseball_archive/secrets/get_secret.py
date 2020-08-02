@@ -1,10 +1,8 @@
 import boto3
 import base64
-import json
 from botocore.exceptions import ClientError
 
-def get_db_creds():
-    secret_name = "baseball_archive/db_creds"
+def get_secret(secret_name):
     region_name = "us-west-2"
     
     # Create a Secrets Manager client
@@ -44,7 +42,7 @@ def get_db_creds():
         # Depending on whether the secret is a string or binary, one of these fields will be populated.
         if 'SecretString' in get_secret_value_response:
             secret = get_secret_value_response['SecretString']
-            return json.loads(secret)
+            return secret
         else:
             decoded_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
             return decoded_binary_secret

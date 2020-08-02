@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from baseball_archive.secrets.get_db_creds import get_db_creds
+import json
+from baseball_archive.secrets.get_secret import get_secret
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'kkhm7mz@$n4$*5))+b*7m(xo65v)_70+ipeb2ff*qnc#-+ai12'
+SECRET_KEY = get_secret('baseball_archive/secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,7 +75,7 @@ WSGI_APPLICATION = 'baseball_archive.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DB_CREDS = get_db_creds()
+DB_CREDS = json.loads(get_secret('baseball_archive/db_creds'))
 
 DATABASES = {
     'default': {
